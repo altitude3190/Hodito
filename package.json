@@ -18,5 +18,8 @@
   "homepage": "https://github.com/altitude3190/hodito",
   "devDependencies": {
     "electron-prebuilt": "~1.2.7"
+  },
+  "dependencies": {
+    "mithril": "~0.2.5"
   }
 }
