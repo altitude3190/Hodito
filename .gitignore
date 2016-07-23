@@ -1,3 +1,5 @@
+/compiled
+
 ### https://raw.github.com/github/gitignore/c751b70cc6ec57de20f918dbf05448333ffa2191/node.gitignore
 
 # Logs
@@ -38,5 +40,4 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
-
 
