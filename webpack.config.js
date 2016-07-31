@@ -23,6 +23,18 @@ var config = {
     // libraryTarget: 'commonjs2',
     // publicPath: 'http://localhost:8080/assets/'
   },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015'],
+        }
+      },
+    ]
+  },
   // debug: true,
   // devtool: 'eval-source-map'
 };
