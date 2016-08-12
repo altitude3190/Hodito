@@ -15,7 +15,7 @@ var config = {
   //     }
   //   ]
   // },
-  entry: './src/app.js',
+  entry: './src/js/app.js',
   output: {
     path: path.join(__dirname, 'compiled'),
     filename: 'app.js',

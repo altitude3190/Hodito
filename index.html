@@ -3,14 +3,178 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
-    <link rel="stylesheet" href="./node_modules/bulma/css/bulma.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-    <div id='content'></div>
+    <div class='columns'>
+
+      <div id='side-bar' class='column is-2'>
+        <aside class="menu">
+          <p class="menu-label">
+            Filter
+          </p>
+          <p class="control">
+            <input class="input" type="text" placeholder="f hoge or n fuga">
+          </p>
+          <p class="menu-label">
+            Dashboards
+          </p>
+          <ul class="menu-list">
+            <li>
+              <a href="#">Folders</a>
+              <ul>
+                <li><a href="#">Folder1</a></li>
+                <li><a href="#">Folder2</a></li>
+                <li><a href="#">Folder3</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Notes</a></li>
+          </ul>
+        </aside>
+      </div>
+
+      <div id= 'note-list-contaier' class='column is-3'>
+        <div id='note-list-header'>
+          <h1 id="folder-name">Title</h1>
+        </div>
+
+        <div id='note-list' class="tile is-ancestor">
+          <div class="tile is-vertical">
+            <div class="tile">
+              <div class="tile is-parent is-vertical">
+                <article class="tile is-child box">
+                  <p class="title is-5">Vertical...</p>
+                  <p class="subtitle is-6">Top tile</p>
+                </article>
+                <article class="tile is-child box">
+                  <p class="title is-5">...tiles</p>
+                  <p class="subtitle is-6">Bottom</p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id='note-container' class='column'>
+        <h1 class="title"> タイトル </h1>
+        <p class="subtitle is-6">
+          created_at:  <span id='created-at'>2016/08/17 18:00:98</span> /
+          updated_at:  <span id='updated-at'>2016/08/19 18:00:98</span>
+        </p>
+
+        <div id='note-body' class="content">
+          <h2>header2</h2>
+          <h3>header3</h3>
+          <p><strong>強調表示</strong></p>
+          <p><em>イタリック</em></p>
+          <blockquote>
+          <p>引用分のサンプル
+          引用分のサンプル
+          引用分のサンプル</p>
+          </blockquote>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;">col1</th>
+          <th style="text-align: left;">col2</th>
+          <th style="text-align: right;">col3</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;">data1</td>
+          <td style="text-align: left;">data1</td>
+          <td style="text-align: right;">data1</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">data2</td>
+          <td style="text-align: left;">data2</td>
+          <td style="text-align: right;">data2</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">data3</td>
+          <td style="text-align: left;">data3</td>
+          <td style="text-align: right;">data3</td>
+          </tr>
+          </tbody>
+          </table>
+          <p><a href="https://google.co.jp">リンク</a></p>
+
+          <h2>header2</h2>
+          <h3>header3</h3>
+          <p><strong>強調表示</strong></p>
+          <p><em>イタリック</em></p>
+          <blockquote>
+          <p>引用分のサンプル
+          引用分のサンプル
+          引用分のサンプル</p>
+          </blockquote>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;">col1</th>
+          <th style="text-align: left;">col2</th>
+          <th style="text-align: right;">col3</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;">data1</td>
+          <td style="text-align: left;">data1</td>
+          <td style="text-align: right;">data1</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">data2</td>
+          <td style="text-align: left;">data2</td>
+          <td style="text-align: right;">data2</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">data3</td>
+          <td style="text-align: left;">data3</td>
+          <td style="text-align: right;">data3</td>
+          </tr>
+          </tbody>
+          </table>
+          <p><a href="https://google.co.jp">リンク</a></p>
+          <h2>header2</h2>
+          <h3>header3</h3>
+          <p><strong>強調表示</strong></p>
+          <p><em>イタリック</em></p>
+          <blockquote>
+          <p>引用分のサンプル
+          引用分のサンプル
+          引用分のサンプル</p>
+          </blockquote>
+          <table>
+          <thead>
+          <tr>
+          <th style="text-align: center;">col1</th>
+          <th style="text-align: left;">col2</th>
+          <th style="text-align: right;">col3</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+          <td style="text-align: center;">data1</td>
+          <td style="text-align: left;">data1</td>
+          <td style="text-align: right;">data1</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">data2</td>
+          <td style="text-align: left;">data2</td>
+          <td style="text-align: right;">data2</td>
+          </tr>
+          <tr>
+          <td style="text-align: center;">data3</td>
+          <td style="text-align: left;">data3</td>
+          <td style="text-align: right;">data3</td>
+          </tr>
+          </tbody>
+          </table>
+          <p><a href="https://google.co.jp">リンク</a></p>
+        </div>
+      </div>
+    </div>
     <script src='./compiled/app.js'></script>
   </body>
 </html>
