@@ -33,6 +33,11 @@ var config = {
           presets: ['es2015'],
         }
       },
+      {
+        test: /\.sass$/,
+        exclude: /node_modules/,
+        loader: 'style!css!sass',
+      }
     ]
   },
   // debug: true,
