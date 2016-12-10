@@ -1,0 +1,46 @@
+{
+  "notes": [
+    {
+      "tags": [],
+      "updatedAt": "2016-07-10T16:02:03.812Z",
+      "folder": "de09a90a79b8",
+      "type": "MARKDOWN_NOTE",
+      "isStarred": false,
+      "title": "PC Setup ",
+      "content": "# PC Setup \n\n![image](http://mollifier.hatenablog.com/about)",
+      "key": "d64c2cefd722",
+      "uniqueKey": "74a623370c9c-de09a90a79b8-d64c2cefd722"
+    },
+    {
+      "tags": [],
+      "title": "ノート2",
+      "description": "",
+      "snippets": [
+        {
+          "name": "",
+          "mode": "text",
+          "content": ""
+        }
+      ],
+      "type": "SNIPPET_NOTE",
+      "folder": "de09a90a79b8",
+      "key": "cf3939d28d92",
+      "isStarred": false,
+      "createdAt": "2016-08-12T07:11:49.293Z",
+      "updatedAt": "2016-08-12T07:11:49.293Z",
+      "uniqueKey": "74a623370c9c-de09a90a79b8-cf3939d28d92"
+    },
+    {
+      "tags": [],
+      "title": "ノート3",
+      "content": "",
+      "type": "MARKDOWN_NOTE",
+      "folder": "de09a90a79b8",
+      "key": "4cc6b6f3b104",
+      "isStarred": false,
+      "createdAt": "2016-08-12T07:11:55.266Z",
+      "updatedAt": "2016-08-12T07:11:59.981Z",
+      "uniqueKey": "74a623370c9c-de09a90a79b8-4cc6b6f3b104"
+    }
+  ]
+}
