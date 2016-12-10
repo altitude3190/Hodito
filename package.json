@@ -31,7 +31,8 @@
     "node-sass": "^3.8.0",
     "sass-loader": "^4.0.0",
     "style-loader": "~0.13.1",
-    "webpack": "~1.13.1"
+    "webpack": "~1.13.1",
+    "babel-plugin-mjsx": "~4.1.1"
   },
   "dependencies": {
     "bulma": "~0.1.0",
