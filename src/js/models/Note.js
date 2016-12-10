@@ -6,6 +6,7 @@ class Note {
     constructor(data) {
         this.id = m.prop(data.id);
         this.title = m.prop(data.title);
+        this.key = m.prop(data.key);
     }
 
 }

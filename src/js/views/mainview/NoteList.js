@@ -3,9 +3,9 @@ import m from 'mithril';
 export default controller => {
     console.log(controller);
     return m('',
-        controller.noteCollection.models().map(model => {
+        controller.noteCollection.models().map((model) => {
             return m('li',
-                m('a', { href: '#' }, model.title())
+                m('a', { href: `#/note/${model.key()}` }, model.title())
             );
         })
     );

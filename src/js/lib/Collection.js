@@ -22,4 +22,13 @@ export default class {
         return dataStore.read();
     }
 
+    findWhere(attrs) {
+        return _.find(this.models(), (model) => {
+            return _.every(attrs, (val, key) => {
+                if (!_.isFunction(model[key])) return false;
+                return model[key]() === val;
+            });
+        });
+    }
+
 }
