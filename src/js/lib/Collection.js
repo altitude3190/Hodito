@@ -6,7 +6,9 @@ export default class {
 
     constructor(data) {
         this.modelClass = data.modelClass;
+        this.modelClassName = data.modelClassName;
         this.models = m.prop([]);
+        this.dataStore = new DataStore({ fileName: data.modelClassName });
     }
 
     add(dataList) {
@@ -17,9 +19,15 @@ export default class {
         });
     }
 
-    read(fileName) {
-        const dataStore = new DataStore({ fileName });
-        return dataStore.read();
+    read() {
+        return this.dataStore.read();
+    }
+
+    save() {
+        const data = _.map(this.models(), model => {
+            return model.toJson();
+        });
+        this.dataStore.write(data);
     }
 
     findWhere(attrs) {

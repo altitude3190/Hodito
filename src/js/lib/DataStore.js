@@ -5,11 +5,15 @@ export default class {
 
     constructor(data) {
         this.fileName = data.fileName;
+        this.filePath = `${CONFIG.SAVE_DATA_DIR}/${this.fileName}.json`;
     }
 
     read() {
-        const filePath = `${CONFIG.SAVE_DATA_DIR}/${this.fileName}.json`;
-        return jetpack.read(filePath, 'json');
+        return jetpack.read(this.filePath, 'json');
+    }
+
+    write(data) {
+        return jetpack.write(this.filePath, data);
     }
 
 }

@@ -1,12 +1,16 @@
 import m from 'mithril';
 import Collection from '../lib/Collection';
+import Model from '../lib/Model';
+import _ from 'lodash';
 
-class Note {
+class Note extends Model {
 
     constructor(data) {
-        this.id = m.prop(data.id);
-        this.title = m.prop(data.title);
-        this.key = m.prop(data.key);
+        super(data);
+        this.props = ['id', 'title', 'key', 'createdAt', 'updatedAt', 'content'];
+        _.forEach(this.props, prop => {
+            this[prop] = m.prop(data[prop]);
+        });
     }
 
 }
@@ -14,11 +18,14 @@ class Note {
 export default class extends Collection {
 
     constructor() {
-        super({ modelClass: Note });
+        super({
+            modelClass: Note,
+            modelClassName: 'Note',
+        });
     }
 
     fetch() {
-        const notes = this.read('Note').notes;
+        const notes = this.read(this.modelClassName);
         this.add(notes);
     }
 
