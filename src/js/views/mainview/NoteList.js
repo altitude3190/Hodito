@@ -5,7 +5,7 @@ export default controller => {
     return m('',
         controller.noteCollection.models().map((model) => {
             return m('li',
-                m('a', { href: `#/note/${model.key()}` }, model.title())
+                m('a', { href: `#/note/${model.key()}/preview` }, model.title())
             );
         })
     );
