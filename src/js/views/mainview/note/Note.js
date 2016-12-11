@@ -1,5 +1,6 @@
 import m from 'mithril';
 import COSNT from '../../../Config';
+import marked from 'marked';
 
 export default controller => {
 
@@ -9,7 +10,7 @@ export default controller => {
           `<textarea id="note-content-textarea">${controller.model.content()}</textarea>`;
     } else {
         noteContentHtml =
-          `<div id='note-body' class="content">${controller.model.content()}</div>`;
+          `<div id='note-body' class="content">${marked(controller.model.content())}</div>`;
     }
 
     return <article>
