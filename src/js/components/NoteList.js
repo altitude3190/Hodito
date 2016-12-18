@@ -29,6 +29,9 @@ export default {
           shareData.noteCollection.save();
           this.noteModels = this._getDisplayNoteModels(folderId);
         };
+        this.onClickNote = function(noteId) {
+            observer().trigger('showNote', noteId);
+        };
     }),
     view: function(ctrl) {
         return <div id= 'note-list-contaier' class='column is-3'>
@@ -42,7 +45,7 @@ export default {
                 <div class="tile">
                   <div id='note-list' class="tile is-parent is-vertical">
                     { ctrl.noteModels.map((model) => {
-                        return <article class="tile is-child box">
+                        return <article class="tile is-child box" note-id={ model.key() } onclick={ m.withAttr('note-id', ctrl.onClickNote) }>
                           <p class="title is-5">{ model.title() }</p>
                           <p class="subtitle is-6">Top tile</p>
                         </article>
