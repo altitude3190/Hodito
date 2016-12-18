@@ -13,7 +13,7 @@ m.route.mode = 'hash';
 //     '/note/:key/:mode': note,
 // });
 
-m.route(document.getElementById('note-list'), '/', {
+m.route(document.getElementById('columns'), '/', {
     '/': home,
-    '/note/:key/:mode': home,
+    '/note/:folder/:key/:mode': home,
 });

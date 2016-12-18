@@ -7,7 +7,7 @@ class Note extends Model {
 
     constructor(data) {
         super(data);
-        this.props = ['id', 'title', 'key', 'createdAt', 'updatedAt', 'content'];
+        this.props = ['id', 'title', 'key', 'folder', 'createdAt', 'updatedAt', 'content'];
         _.forEach(this.props, prop => {
             this[prop] = m.prop(data[prop]);
         });
@@ -24,9 +24,6 @@ export default class extends Collection {
         });
     }
 
-    fetch() {
-        const notes = this.read(this.modelClassName);
-        this.add(notes);
-    }
+
 
 }

@@ -23,6 +23,11 @@ export default class {
         return this.dataStore.read();
     }
 
+    fetch() {
+        const notes = this.read(this.modelClassName);
+        this.add(notes);
+    }
+
     save() {
         const data = _.map(this.models(), model => {
             return model.toJson();
@@ -33,6 +38,15 @@ export default class {
     findWhere(attrs) {
         return _.find(this.models(), (model) => {
             return _.every(attrs, (val, key) => {
+                if (!_.isFunction(model[key])) return false;
+                return model[key]() === val;
+            });
+        });
+    }
+
+    filter(filterOptions) {
+        return _.filter(this.models(), model => {
+            return _.every(filterOptions, (val, key) => {
                 if (!_.isFunction(model[key])) return false;
                 return model[key]() === val;
             });

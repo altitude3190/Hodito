@@ -1,11 +1,16 @@
 import m from 'mithril';
 import Collection from '../lib/Collection';
+import Model from '../lib/Model';
+import _ from 'lodash';
 
-class Folder {
+class Folder extends Model {
 
     constructor(data) {
-        this.id = m.prop(data.id);
-        this.name = m.prop(data.name);
+        super(data);
+        this.props = ['id', 'name', 'key', 'createdAt', 'updatedAt', 'content'];
+        _.forEach(this.props, prop => {
+            this[prop] = m.prop(data[prop]);
+        });
     }
 
 }
@@ -13,11 +18,14 @@ class Folder {
 export default class extends Collection {
 
     constructor() {
-        super({ modelClass: Folder });
+        super({
+            modelClass: Folder,
+            modelClassName: 'Folder',
+        });
     }
 
     fetch() {
-        const folders = this.read('Folder').folders;
+        const folders = this.read('Folder');
         this.add(folders);
     }
 
