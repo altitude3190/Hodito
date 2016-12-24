@@ -1,9 +1,6 @@
-// import controller from '../../controllers/mainview/NoteList';
-// import view from '../../views/mainview/NoteList';
 import m from 'mithril';
 import observer from '../lib/Observer';
 import shareData from './shareData/Home';
-// import noteListVm from '../vms/mainview/NoteList';
 
 export default {
     controller: observer().register(['onClickFolderName'], function(folderId) {

@@ -1,7 +1,4 @@
 import m from 'mithril';
-// import note from './mainview/note/Note';
-// import noteListVm from '../vms/mainview/NoteList';
-// import folderListVm from '../vms/sidebar/Folder';
 import observer from '../lib/Observer';
 import shareData from './shareData/Home';
 import marked from 'marked';
@@ -31,7 +28,7 @@ export default {
         if (ctrl.mode == 'preview') {
 
 
-        return <div id='note-container' class='column'>
+                  return <div id='note-container' class='column'>
           <h1 class="title"> { ctrl.noteModel.title() } </h1>
           <p class="subtitle is-6">
             created_at:  <span id='created-at'>{ ctrl.noteModel.createdAt() }</span> /
@@ -68,5 +65,7 @@ export default {
 
 
         </div>
+
+
     }
 };
