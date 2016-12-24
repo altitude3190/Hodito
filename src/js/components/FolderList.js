@@ -1,6 +1,6 @@
 import m from 'mithril';
 import observer from '../lib/Observer';
-import shareData from './shareData/Home';
+import DataStore from '../lib/DataStore';
 
 export default {
     controller: function() {
@@ -9,13 +9,13 @@ export default {
         };
         this.save = function() {
             console.log('hogehogehoge')
-            shareData.folderCollection.add([{
+            DataStore.get('folderCollection').add([{
                 "id": "3",
                 "key": "de09a90a79b8",
                 "name": "新規",
                 "color": "#3FD941"
             }]);
-            shareData.folderCollection.save();
+            DataStore.get('folderCollection').save();
         }
     },
     view: function(ctrl) {
@@ -35,7 +35,7 @@ export default {
               <a href="#">Folders</a>
               <a class="button" onclick={ ctrl.save } >createNewFolder</a>
               <ul id='sidebar-folder-list'>
-                { shareData.folderCollection.models().map((model) => {
+                { DataStore.get('folderCollection').models().map((model) => {
                   return <li><a folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } >{ model.name() }</a></li>
                 }) }
               </ul>

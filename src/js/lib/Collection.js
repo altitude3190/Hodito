@@ -1,6 +1,6 @@
 import m from 'mithril';
 import _ from 'lodash';
-import DataStore from './DataStore';
+import DataApi from './DataApi';
 
 export default class {
 
@@ -8,7 +8,7 @@ export default class {
         this.modelClass = data.modelClass;
         this.modelClassName = data.modelClassName;
         this.models = m.prop([]);
-        this.dataStore = new DataStore({ fileName: data.modelClassName });
+        this.dataApi = new DataApi({ fileName: data.modelClassName });
     }
 
     add(dataList) {
@@ -20,7 +20,7 @@ export default class {
     }
 
     read() {
-        return this.dataStore.read();
+        return this.dataApi.read();
     }
 
     fetch() {
@@ -32,7 +32,7 @@ export default class {
         const data = _.map(this.models(), model => {
             return model.toJson();
         });
-        this.dataStore.write(data);
+        this.dataApi.write(data);
     }
 
     findWhere(attrs) {

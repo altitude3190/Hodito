@@ -1,21 +1,22 @@
 import m from 'mithril';
 import observer from '../lib/Observer';
-import shareData from './shareData/Home';
+import DataStore from '../lib/DataStore';
 import marked from 'marked';
 
 export default {
     controller: observer().register(['showNote'], function(noteId) {
         noteId = noteId || 'd64c2cefd722';
-        this.noteModel = shareData.noteCollection.findWhere({ key: noteId });
+        this.noteModel = DataStore.get('noteCollection').findWhere({ key: noteId });
         this.mode = this.mode || 'preview';
 
-        if (shareData.timer) clearTimeout(shareData.timer);
+        if (DataStore.get('timer')) clearTimeout(DataStore.get('timer'));
         if (this.mode == 'edit') {
-          shareData.timer = setInterval(() => {
+          const timer = setInterval(() => {
               console.log('hoge');
               this.noteModel.content(document.getElementById('note-content-textarea').value);
-              shareData.noteCollection.save();
+              DataStore.get('noteCollection').save();
           }, 2000);
+          DataStore.set('timer', timer);
         }
 
         this.changeMode = function(noteId, mode) {
@@ -26,7 +27,6 @@ export default {
     }),
     view: function(ctrl) {
         if (ctrl.mode == 'preview') {
-
 
                   return <div id='note-container' class='column'>
           <h1 class="title"> { ctrl.noteModel.title() } </h1>

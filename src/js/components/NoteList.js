@@ -1,18 +1,18 @@
 import m from 'mithril';
 import observer from '../lib/Observer';
-import shareData from './shareData/Home';
+import DataStore from '../lib/DataStore';
 
 export default {
     controller: observer().register(['onClickFolderName'], function(folderId) {
         this._getDisplayNoteModels = function(folderId) {
             if (folderId) {
-                return shareData.noteCollection.filter({ folder: '' + folderId });
+                return DataStore.get('noteCollection').filter({ folder: '' + folderId });
             }
-            return shareData.noteCollection.models();
+            return DataStore.get('noteCollection').models();
         };
         this.noteModels = this._getDisplayNoteModels(folderId);
         this.save = function() {
-          shareData.noteCollection.add([
+          DataStore.get('noteCollection').add([
             {
                 id: 'hogehoge' + new Date(),
                 title: 'new title',
@@ -23,7 +23,7 @@ export default {
                 content: 'hoge\nhoge'
             }
           ]);
-          shareData.noteCollection.save();
+          DataStore.get('noteCollection').save();
           this.noteModels = this._getDisplayNoteModels(folderId);
         };
         this.onClickNote = function(noteId) {
