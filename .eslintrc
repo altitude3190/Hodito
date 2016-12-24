@@ -5,6 +5,7 @@
   ],
   "rules": {
     "indent": [2, 4],
+    "space-before-function-paren": [ 2, "never" ],
   },
   "settings": {
     "import/core-modules": [
