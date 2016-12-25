@@ -1,47 +1,51 @@
 import m from 'mithril';
-import observer from '../lib/Observer';
+import _ from 'lodash';
+import Publisher from '../lib/Publisher';
 import DataStore from '../lib/DataStore';
 
 export default {
-    controller: observer().register(['onClickFolderName'], function(folderId) {
-        this._getDisplayNoteModels = function(folderId) {
-            if (folderId) {
-                return DataStore.get('noteCollection').filter({ folder: '' + folderId });
-            }
-            return DataStore.get('noteCollection').models();
+
+    controller() {
+        this.displayNoteModelsCond = {};
+
+        this.createNewNote = () => {
+            const noteCollection = DataStore.get('noteCollection');
+            const currentFolderId = this.displayNoteModelsCond.folderId;
+            noteCollection.addDefaultDataList(currentFolderId);
+            noteCollection.save();
         };
-        this.noteModels = this._getDisplayNoteModels(folderId);
-        this.save = function() {
-          DataStore.get('noteCollection').add([
-            {
-                id: 'hogehoge' + new Date(),
-                title: 'new title',
-                key: 'hogehoge' + new Date(),
-                folder: '' + folderId,
-                createdAt: 11111,
-                updatedAt: 22222,
-                content: 'hoge\nhoge'
-            }
-          ]);
-          DataStore.get('noteCollection').save();
-          this.noteModels = this._getDisplayNoteModels(folderId);
+
+        this.updateDisplayNoteModelsCond = (options) => {
+            const defaultCond = { folderId: void 0 };
+            this.displayNoteModelsCond = _.assign({}, defaultCond, options);
         };
-        this.onClickNote = function(noteId) {
-            observer().trigger('showNote', noteId);
+
+        this.onClickNote = (noteId) => {
+            Publisher.trigger('showNote', noteId);
         };
-    }),
-    view: function(ctrl) {
+
+        Publisher.on('onClickFolderName', this.updateDisplayNoteModelsCond, this);
+    },
+
+    view(ctrl) {
+        this.getDisplayNoteModels = () => {
+            const cond = ctrl.displayNoteModelsCond;
+            const noteCollection = DataStore.get('noteCollection');
+            if (cond.folderId) return noteCollection.filter({ folder: '' + cond.folderId });
+            return noteCollection.models();
+        };
+
         return <div id= 'note-list-contaier' class='column is-3'>
             <div id='note-list-header'>
               <h1 id="folder-name">Title</h1>
-              <a class="button" onclick={ ctrl.save.bind(ctrl) }>createNewNote</a>
+              <a class="button" onclick={ ctrl.createNewNote }>createNewNote</a>
             </div>
 
             <div class="tile is-ancestor">
               <div class="tile is-vertical">
                 <div class="tile">
                   <div id='note-list' class="tile is-parent is-vertical">
-                    { ctrl.noteModels.map((model) => {
+                    { this.getDisplayNoteModels().map((model) => {
                         return <article class="tile is-child box" note-id={ model.key() } onclick={ m.withAttr('note-id', ctrl.onClickNote) }>
                           <p class="title is-5">{ model.title() }</p>
                           <p class="subtitle is-6">Top tile</p>
@@ -52,5 +56,5 @@ export default {
               </div>
             </div>
           </div>
-    }
+    },
 };

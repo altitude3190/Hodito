@@ -24,6 +24,18 @@ export default class extends Collection {
         });
     }
 
-
+    addDefaultDataList(folderId) {
+        this.add([
+            {
+                id: 'hogehoge' + new Date(),
+                title: 'new title',
+                key: 'hogehoge' + new Date(),
+                folder: '' + folderId,
+                createdAt: 11111,
+                updatedAt: 22222,
+                content: 'hoge\nhoge'
+            }
+        ]);
+    }
 
 }

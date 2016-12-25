@@ -1,24 +1,22 @@
 import m from 'mithril';
 import observer from '../lib/Observer';
+import Publisher from '../lib/Publisher';
 import DataStore from '../lib/DataStore';
 
 export default {
-    controller: function() {
-        this.onClickFolderName = function(folderId) {
-            observer().trigger('onClickFolderName', folderId);
+    controller() {
+        this.onClickFolderName = (folderId) => {
+            Publisher.trigger('onClickFolderName', { folderId });
         };
-        this.save = function() {
-            console.log('hogehogehoge')
-            DataStore.get('folderCollection').add([{
-                "id": "3",
-                "key": "de09a90a79b8",
-                "name": "新規",
-                "color": "#3FD941"
-            }]);
-            DataStore.get('folderCollection').save();
-        }
+        this.createNewFolder = () => {
+            const folderCollection = DataStore.get('folderCollection');
+            folderCollection.addDefaultDataList();
+            folderCollection.save();
+            // DataStore.get('folderCollection').addDefaultDataList();
+            // DataStore.get('folderCollection').save();
+        };
     },
-    view: function(ctrl) {
+    view(ctrl) {
         return <div id='side-bar' class='column is-2'>
         <aside class="menu">
           <p class="menu-label">
@@ -33,7 +31,7 @@ export default {
           <ul class="menu-list">
             <li>
               <a href="#">Folders</a>
-              <a class="button" onclick={ ctrl.save } >createNewFolder</a>
+              <a class="button" onclick={ ctrl.createNewFolder } >createNewFolder</a>
               <ul id='sidebar-folder-list'>
                 { DataStore.get('folderCollection').models().map((model) => {
                   return <li><a folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } >{ model.name() }</a></li>
@@ -44,5 +42,5 @@ export default {
           </ul>
         </aside>
       </div>
-    }
+    },
 };

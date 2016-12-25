@@ -29,4 +29,15 @@ export default class extends Collection {
         this.add(folders);
     }
 
+    addDefaultDataList() {
+        this.add([
+            {
+                id: '4',
+                key: 'fjiwejio',
+                name: 'hoge',
+                color: '',
+            },
+        ]);
+    }
+
 }
