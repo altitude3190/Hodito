@@ -6,6 +6,7 @@
   "rules": {
     "indent": [2, 4],
     "space-before-function-paren": [ 2, "never" ],
+    "arrow-body-style": [ 2, "always" ],
   },
   "settings": {
     "import/core-modules": [
