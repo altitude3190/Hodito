@@ -1,24 +1,24 @@
 import m from 'mithril';
-import noteList from './NoteList';
-import folder from './FolderList';
-import note from './Note';
-import noteListVm from '../vms/mainview/NoteList';
-import folderListVm from '../vms/sidebar/Folder';
+import NoteList from './NoteList';
+import Folder from './FolderList';
+import Note from './Note';
+import NoteListVm from '../vms/NoteList';
+import FolderListVm from '../vms/FolderList';
 import DataStore from '../lib/DataStore';
 
 export default {
     controller() {
-        DataStore.set('noteCollection', noteListVm.build());
-        DataStore.set('folderCollection', folderListVm.build());
+        DataStore.set('noteCollection', NoteListVm.build());
+        DataStore.set('folderCollection', FolderListVm.build());
         this.unload = () => {
             DataStore.reset();
         };
     },
     view() {
         return [
-            m.component(folder),
-            m.component(noteList),
-            m.component(note),
+            m.component(Folder),
+            m.component(NoteList),
+            m.component(Note),
         ];
     },
 };
