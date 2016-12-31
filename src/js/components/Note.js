@@ -24,16 +24,37 @@ export default {
 
         if (NoteVm.isPreviewMode()) {
             return <div id='note-container' class='column'>
-              <h1 class="title"> { noteModel.title() } </h1>
-              <p class="subtitle is-6">
-                created_at:  <span id='created-at'>{ noteModel.createdAt() }</span> /
+              <h1 id="note-title"> { noteModel.title() } </h1>
+              <p id='note-date'>
+                created_at:  <span id='created-at'>{ noteModel.createdAt() }</span>
                 updated_at:  <span id='updated-at'>{ noteModel.updatedAt() }</span>
               </p>
 
-              <a onclick={ NoteVm.changeMode } class="button is-outlined">Edit</a>
-              <a class="button is-primary is-outlined">Markdown</a>
+              <div class="tabs is-boxed">
+                <ul>
+                  <li class="is-active">
+                    <a>
+                      <span class="icon is-small"><i class="fa fa-play"></i></span>
+                      <span>Render</span>
+                    </a>
+                  </li>
+                  <li onclick={ NoteVm.changeMode }>
+                    <a>
+                      <span class="icon is-small"><i class="fa fa-edit"></i></span>
+                      <span>Edit</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-              <div id='note-body' class="content">
+
+
+
+
+
+
+
+              <div class="markdown-body">
                 { m.trust(marked(noteModel.content())) }
               </div>
 
@@ -42,16 +63,30 @@ export default {
 
 
         return <div id='note-container' class='column'>
-          <h1 class="title"> { noteModel.title() } </h1>
-          <p class="subtitle is-6">
-            created_at:  <span id='created-at'>{ noteModel.createdAt() }</span> /
+          <h1 id="note-title"> { noteModel.title() } </h1>
+          <p id='note-date'>
+            created_at:  <span id='created-at'>{ noteModel.createdAt() }</span>
             updated_at:  <span id='updated-at'>{ noteModel.updatedAt() }</span>
           </p>
 
-          <a class="button is-outlined">Edit</a>
-          <a onclick={ NoteVm.changeMode } class="button is-primary is-outlined">Markdown</a>
+          <div class="tabs is-boxed">
+            <ul>
+              <li onclick={ NoteVm.changeMode }>
+                <a>
+                  <span class="icon is-small"><i class="fa fa-play"></i></span>
+                  <span>Render</span>
+                </a>
+              </li>
+              <li class="is-active">
+                <a>
+                  <span class="icon is-small"><i class="fa fa-edit"></i></span>
+                  <span>Edit</span>
+                </a>
+              </li>
+            </ul>
+          </div>
 
-          <textarea id="note-content-textarea">{noteModel.content()}</textarea>
+          <textarea id="note-textarea">{noteModel.content()}</textarea>
 
         </div>
     }

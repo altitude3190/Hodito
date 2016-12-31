@@ -28,7 +28,7 @@ export default {
         if (this.isPreviewMode()) return;
         const noteModel = options.noteModel || this.getModelByDisplayCond();
         timer = setInterval(() => {
-            noteModel.content(document.getElementById('note-content-textarea').value);
+            noteModel.content(document.getElementById('note-textarea').value);
             DataStore.get('noteCollection').save();
         }, 2000);
     },

@@ -10,30 +10,23 @@ export default {
         };
     },
     view(ctrl) {
-        return <div id='side-bar' class='column is-2'>
-        <aside class="menu">
-          <p class="menu-label">
-            Filter
-          </p>
-          <p class="control">
-            <input class="input" type="text" placeholder="f hoge or n fuga"></input>
-          </p>
-          <p class="menu-label">
-            Dashboards
-          </p>
-          <ul class="menu-list">
-            <li>
-              <a href="#">Folders</a>
-              <a class="button" onclick={ FolderListVm.createNewFolder } >createNewFolder</a>
-              <ul id='sidebar-folder-list'>
-                { DataStore.get('folderCollection').models().map((model) => {
-                  return <li><a folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } >{ model.name() }</a></li>
-                }) }
-              </ul>
-            </li>
-            <li><a href="#">Notes</a></li>
+        return <aside id="sidebar" class='column is-2'>
+          <div id='sidebar-folder-header'>
+            <p id="sidebar-folder-label">FOLDERS</p>
+            <div id='sidebar-folder-create-btn' onclick={ FolderListVm.createNewFolder }>
+              <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <ul id='sidebar-folder-list'>
+            {
+              DataStore.get('folderCollection').models().map((model) => {
+                return <li folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) }>
+                  <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
+                  <span>{ model.name() }</span>
+                </li>
+              })
+            }
           </ul>
         </aside>
-      </div>
     },
 };

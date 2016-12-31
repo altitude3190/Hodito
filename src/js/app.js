@@ -1,4 +1,4 @@
-import styles from '../css/app.sass';
+import styles from '../css/my.sass';
 import m from 'mithril';
 import home from './components/Home';
 
