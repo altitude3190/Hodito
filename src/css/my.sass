@@ -387,23 +387,18 @@ body
   color: #f2f2f2
 
 #sidebar-folder-header
-  display: flex;
-  margin-bottom: 10px
+  margin-bottom: 5px
   #sidebar-folder-label
-    margin-right: auto;
   #sidebar-folder-create-btn
-    height: 20px
-    width: 20px
-    border-radius: 22px
+    width: 100%
+    border-radius: 5px
     border: 2px solid #777D84
-    padding: 1px
-    .icon
-      vertical-align: top
-      color: #777D84
+    margin-top: 5px
+    color: #777D84
+    outline : none;
     &:hover
       border: 2px solid #f2f2f2
-      .icon
-        color: #f2f2f2
+      color: #f2f2f2
 
 #sidebar-folder-list
   overflow: scroll
@@ -443,6 +438,8 @@ body
 
 .note-list-note-title
   font-size: 1.2em
+  border: none
+  width: 100%
 
 .note-list-note-created-at
   color: #888888
@@ -456,6 +453,10 @@ body
   padding: 20px
   overflow: hidden
 
+#note-title
+  font-size: 1.9em
+  border: none
+  width: 100%
 
 #note-date
 
@@ -553,18 +554,9 @@ body
   padding: 5px
   /*bottom: 10px*/
 
-
-
-
-
-
-
-
-
-
-
-
-
+#folder-name-form
+  display: inline
+  width: 80%
 
 
 .markdown-body

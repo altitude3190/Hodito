@@ -37,22 +37,36 @@ export default {
             FolderListVm.deleteFolder({ id: folderId });
             m.endComputation();
         };
+        this.updateEditableTitle = (folderId) => {
+            FolderListVm.editableTitleFolderId(folderId);
+        };
+        this.updateFolderName = (newFolderName) => {
+            FolderListVm.updateFolderName(newFolderName);
+            FolderListVm.editableTitleFolderId(null);
+        };
     },
     view(ctrl) {
         return <aside id="sidebar" class='column is-2'>
           <div id='sidebar-folder-header'>
             <p id="sidebar-folder-label">FOLDERS</p>
-            <div id='sidebar-folder-create-btn' onclick={ FolderListVm.createNewFolder }>
-              <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span>
-            </div>
+            <button id="sidebar-folder-create-btn" onclick={ FolderListVm.createNewFolder }>
+              <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span> create a new folder
+            </button>
           </div>
           <ul id='sidebar-folder-list'>
             {
               DataStore.get('folderCollection').models().map((model) => {
-                return <li folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } oncontextmenu={ m.withAttr('folder-id', ctrl.showContextMenu) } >
-                  <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
-                  <span>{ model.name() }</span>
-                </li>
+                if (model.key() !== FolderListVm.editableTitleFolderId()) {
+                  return <li folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } oncontextmenu={ m.withAttr('folder-id', ctrl.showContextMenu) } >
+                    <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
+                    <input id='folder-name-form' type='text' value={ model.name() } autofocus onblur={ m.withAttr('value', ctrl.updateFolderName) }></input>
+                  </li>
+                } else {
+                  return <li folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } oncontextmenu={ m.withAttr('folder-id', ctrl.showContextMenu) } >
+                    <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
+                    <span folder-id={ model.key() } ondblclick={ m.withAttr('folder-id', ctrl.updateEditableTitle) }>{ model.name() }</span>
+                  </li>
+                }
               })
             }
           </ul>

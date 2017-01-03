@@ -1,6 +1,8 @@
+import m from 'mithril';
 import DataStore from '../lib/DataStore';
 import FolderCollection from '../models/Folder';
 
+const editableTitleFolderId = m.prop(null);
 
 export default {
     build() {
@@ -18,5 +20,11 @@ export default {
         folderCollection.delete(targetAttr);
         folderCollection.save();
     },
+    updateFolderName(newFolderName) {
+        const folderCollection = DataStore.get('folderCollection');
+        folderCollection.update({ key: editableTitleFolderId() }, { name: newFolderName });
+        folderCollection.save();
+    },
+    editableTitleFolderId,
 };
 
