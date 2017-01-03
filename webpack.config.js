@@ -23,7 +23,7 @@ var config = {
     // libraryTarget: 'commonjs2',
     // publicPath: 'http://localhost:8080/assets/'
   },
-  target: 'node',
+  target: 'electron',
   module: {
     loaders: [
       {
