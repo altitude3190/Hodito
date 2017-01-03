@@ -19,6 +19,27 @@ export default class {
         });
     }
 
+    update(targetAttrs, overwriteData) {
+        _.forEach(this.models(), (model) => {
+            const isMatch = _.every(targetAttrs, (val, key) => {
+                return model[key]() === val;
+            });
+            if (!isMatch) return;
+            _.forEach(overwriteData, (val, key) => {
+                model[key](val);
+            });
+        });
+    }
+
+    delete(targetAttr) {
+        const index = _.findIndex(this.models(), model => {
+            return _.every(targetAttr, (val, key) => {
+                return model[key]() === val;
+            });
+        });
+        this.models().splice(index, 1);
+    }
+
     read() {
         return this.dataApi.read();
     }

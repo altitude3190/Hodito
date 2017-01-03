@@ -13,9 +13,13 @@ export default {
             NoteVm.updateDisplayCond({ noteId });
         };
 
+        this.onChangeNoteTitleValue = (newNoteTitle) => {
+            NoteVm.updateNoteTitle(newNoteTitle);
+        };
+
         Publisher.on('showNote', this.updateNoteModel, this);
     },
-    view() {
+    view(ctrl) {
         NoteVm.clearTimer();
 
         const noteModel = NoteVm.getModelByDisplayCond();
@@ -24,7 +28,9 @@ export default {
 
         if (NoteVm.isPreviewMode()) {
             return <div id='note-container' class='column'>
-              <h1 id="note-title"> { noteModel.title() } </h1>
+              <form>
+                <input type="text" id="note-title" value={ noteModel.title() } onblur={ m.withAttr('value', ctrl.onChangeNoteTitleValue) }></input>
+              </form>
               <p id='note-date'>
                 created_at:  <span id='created-at'>{ noteModel.createdAt() }</span>
                 updated_at:  <span id='updated-at'>{ noteModel.updatedAt() }</span>

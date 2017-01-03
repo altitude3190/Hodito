@@ -24,4 +24,9 @@ export default {
         noteCollection.addDefaultDataList(currentFolderId);
         noteCollection.save();
     },
+    deleteNote(targetAttr) {
+        const noteCollection = DataStore.get('noteCollection');
+        noteCollection.delete(targetAttr);
+        noteCollection.save();
+    },
 };

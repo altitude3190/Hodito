@@ -13,5 +13,10 @@ export default {
         folderCollection.addDefaultDataList();
         folderCollection.save();
     },
+    deleteFolder(targetAttr) {
+        const folderCollection = DataStore.get('folderCollection');
+        folderCollection.delete(targetAttr);
+        folderCollection.save();
+    },
 };
 

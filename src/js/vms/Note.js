@@ -18,6 +18,11 @@ export default {
         const noteCollection = DataStore.get('noteCollection');
         return noteCollection.findWhere({ key: displayCond.noteId });
     },
+    updateNoteTitle(newNoteTitle) {
+        const noteCollection = DataStore.get('noteCollection');
+        noteCollection.update({ key: displayCond.noteId }, { title: newNoteTitle });
+        noteCollection.save();
+    },
     changeMode() {
         mode = mode === 'preview' ? 'edit' : 'preview';
     },
