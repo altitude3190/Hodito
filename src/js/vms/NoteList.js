@@ -15,7 +15,9 @@ export default {
     },
     getDisplayNoteModels() {
         const noteCollection = DataStore.get('noteCollection');
-        if (displayNoteModelsCond.folderId) return noteCollection.filter({ folder: '' + displayNoteModelsCond.folderId });
+        if (displayNoteModelsCond.folderId) {
+            return noteCollection.filter({ folderId: displayNoteModelsCond.folderId });
+        }
         return noteCollection.models();
     },
     createNewNote() {

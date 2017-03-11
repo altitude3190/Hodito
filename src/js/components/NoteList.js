@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Publisher from '../lib/Publisher';
 import NoteListVm from '../vms/NoteList';
 import { remote } from 'electron';
+import moment from 'moment';
 
 const { Menu, MenuItem } = remote;
 const makeContextMenu = (noteId) => {
@@ -34,7 +35,7 @@ export default {
         this.deleteNote = (noteId) => {
             m.redraw.strategy('diff');
             m.startComputation();
-            NoteListVm.deleteNote({ key: noteId });
+            NoteListVm.deleteNote({ id: noteId });
             m.endComputation();
         };
 
@@ -50,9 +51,9 @@ export default {
           <ul id='note-list'>
             {
               NoteListVm.getDisplayNoteModels().map((model) => {
-                return <li class="note-list-note" note-id={ model.key() } onclick={ m.withAttr('note-id', ctrl.onClickNote) } oncontextmenu={ m.withAttr('note-id', ctrl.showContextMenu) }>
+                return <li class="note-list-note" note-id={ model.id() } onclick={ m.withAttr('note-id', ctrl.onClickNote) } oncontextmenu={ m.withAttr('note-id', ctrl.showContextMenu) }>
                   <p class="note-list-note-title">{ model.title() }</p>
-                  <p class="note-list-note-created-at">{ model.createdAt() }</p>
+                  <p class="note-list-note-created-at">updated: { moment.unix(model.updatedAt()).format('YYYY/MM/DD hh:mm') }</p>
                 </li>
               })
             }

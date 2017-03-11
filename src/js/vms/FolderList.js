@@ -1,4 +1,5 @@
 import m from 'mithril';
+import moment from 'moment';
 import DataStore from '../lib/DataStore';
 import FolderCollection from '../models/Folder';
 
@@ -22,7 +23,13 @@ export default {
     },
     updateFolderName(newFolderName) {
         const folderCollection = DataStore.get('folderCollection');
-        folderCollection.update({ id: editableTitleFolderId() }, { name: newFolderName });
+        folderCollection.update(
+            { id: editableTitleFolderId() },
+            {
+                name: newFolderName,
+                updatedAt: moment().unix(),
+            }
+        );
         folderCollection.save();
     },
     editableTitleFolderId,

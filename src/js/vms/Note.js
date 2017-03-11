@@ -16,11 +16,11 @@ export default {
     },
     getModelByDisplayCond() {
         const noteCollection = DataStore.get('noteCollection');
-        return noteCollection.findWhere({ key: displayCond.noteId });
+        return noteCollection.findWhere({ id: displayCond.noteId });
     },
     updateNoteTitle(newNoteTitle) {
         const noteCollection = DataStore.get('noteCollection');
-        noteCollection.update({ key: displayCond.noteId }, { title: newNoteTitle });
+        noteCollection.update({ id: displayCond.noteId }, { title: newNoteTitle });
         noteCollection.save();
     },
     changeMode() {
