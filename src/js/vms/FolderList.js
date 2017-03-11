@@ -22,7 +22,7 @@ export default {
     },
     updateFolderName(newFolderName) {
         const folderCollection = DataStore.get('folderCollection');
-        folderCollection.update({ key: editableTitleFolderId() }, { name: newFolderName });
+        folderCollection.update({ id: editableTitleFolderId() }, { name: newFolderName });
         folderCollection.save();
     },
     editableTitleFolderId,

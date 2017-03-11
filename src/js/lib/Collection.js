@@ -37,6 +37,7 @@ export default class {
                 return model[key]() === val;
             });
         });
+        if (index === -1) return;
         this.models().splice(index, 1);
     }
 

@@ -2,6 +2,7 @@ import m from 'mithril';
 import Collection from '../lib/Collection';
 import Model from '../lib/Model';
 import _ from 'lodash';
+import IdMaker from '../util/IdMaker';
 
 class Folder extends Model {
 
@@ -32,10 +33,8 @@ export default class extends Collection {
     addDefaultDataList() {
         this.add([
             {
-                id: '4',
-                key: 'fjiwejio',
-                name: 'hoge',
-                color: '',
+                id: IdMaker.makeId(),
+                name: 'new folder',
             },
         ]);
     }

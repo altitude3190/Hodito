@@ -56,7 +56,7 @@ export default {
           <ul id='sidebar-folder-list'>
             {
               DataStore.get('folderCollection').models().map((model) => {
-                if (model.key() !== FolderListVm.editableTitleFolderId()) {
+                if (model.id() === FolderListVm.editableTitleFolderId()) {
                   return <li folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } oncontextmenu={ m.withAttr('folder-id', ctrl.showContextMenu) } >
                     <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
                     <input id='folder-name-form' type='text' value={ model.name() } autofocus onblur={ m.withAttr('value', ctrl.updateFolderName) }></input>
@@ -64,7 +64,7 @@ export default {
                 } else {
                   return <li folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.onClickFolderName) } oncontextmenu={ m.withAttr('folder-id', ctrl.showContextMenu) } >
                     <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
-                    <span folder-id={ model.key() } ondblclick={ m.withAttr('folder-id', ctrl.updateEditableTitle) }>{ model.name() }</span>
+                    <span folder-id={ model.id() } ondblclick={ m.withAttr('folder-id', ctrl.updateEditableTitle) }>{ model.name() }</span>
                   </li>
                 }
               })
