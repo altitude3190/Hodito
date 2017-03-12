@@ -3,7 +3,10 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: path.join(__dirname, 'src/js/app.js'),
+    entry: [
+        path.join(__dirname, 'src/js/app.js'),
+        path.join(__dirname, 'src/sass/main.sass'),
+    ],
     output: {
         path: path.join(__dirname, 'compiled'),
         filename: 'app.js',

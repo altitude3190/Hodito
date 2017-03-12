@@ -1,0 +1,26 @@
+=fa($size, $dimensions)
+  display: inline-block
+  font-size: $size
+  height: $dimensions
+  line-height: $dimensions
+  text-align: center
+  vertical-align: middle
+  width: $dimensions
+
+.fa
+  font-size: 21px
+  text-align: center
+  vertical-align: top
+
+.icon
+  +fa(21px, 24px)
+  .fa
+    font-size: inherit
+    line-height: inherit
+  // Sizes
+  &.is-small
+    +fa(12px, 14px)
+  &.is-medium
+    +fa(28px, 32px)
+  &.is-large
+    +fa(42px, 48px)

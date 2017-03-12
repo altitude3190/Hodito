@@ -1,0 +1,72 @@
+.tabs
+  // &:not(:last-child)
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  align-items: stretch
+  display: flex
+  justify-content: space-between
+  line-height: 15px
+  font-size: 1.3rem
+  overflow: hidden
+  overflow-x: auto
+  white-space: nowrap
+  a
+    align-items: center
+    border-bottom: 1px solid #e8e8e8
+    /*color: #444444*/
+    display: flex
+    justify-content: center
+    margin-bottom: -1px
+    padding: 6px 12px
+    vertical-align: top
+    &:hover
+      border-bottom-color: #e8e8e8
+      /*color: #e1e1e1*/
+  li
+    display: block
+    &.is-active
+      a
+        border-bottom-color: #e8e8e8
+        /*color: #e8e8e8*/
+  ul
+    align-items: center
+    border-bottom: 1px solid #e8e8e8
+    display: flex
+    flex-grow: 1
+    flex-shrink: 0
+    justify-content: flex-start
+    /*
+      &.is-left
+        padding-right: 10px
+      &.is-center
+        flex: none
+        justify-content: center
+        padding-left: 10px
+        padding-right: 10px
+      &.is-right
+        justify-content: flex-end
+        padding-left: 10px */
+  .icon
+    &:first-child
+      margin-right: 8px
+    &:last-child
+      margin-left: 8px
+  // Styles
+  &.is-boxed
+    a
+      border: 1px solid transparent
+      /*border-radius: 5px 5px 0 0*/
+      /*padding-bottom: 5px*/
+      /*padding-top: 5px*/
+      &:hover
+        background-color: #e8e8e8
+        border-bottom-color: #e8e8e8
+    li
+      &.is-active
+        a
+          background-color: #f2f2f2
+          border-color: #e8e8e8
+          border-bottom-color: transparent !important
