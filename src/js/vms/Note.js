@@ -1,43 +1,64 @@
-import NoteCollection from '../models/Note';
+import _ from 'lodash';
+import moment from 'moment';
 import DataStore from '../lib/DataStore';
+import Publisher from '../lib/Publisher';
 
-let displayCond = {};
-let mode = 'preview';
-let timer = void 0;
+export default class {
 
-export default {
-    build() {
-        const noteCollection = new NoteCollection();
-        noteCollection.fetch();
-        return noteCollection;
-    },
-    updateDisplayCond(cond) {
-        displayCond = cond;
-    },
-    getModelByDisplayCond() {
+    constructor(noteId) {
+        Publisher.on('showNote', this.updateDisplayNoteId, this);
+
+        this.currentDisplayNoteId = noteId;
+        this.mode = 'preview';
+        this.timer = void 0;
+    }
+
+    getDisplayNoteModel() {
         const noteCollection = DataStore.get('noteCollection');
-        return noteCollection.findWhere({ id: displayCond.noteId });
-    },
+        return noteCollection.findWhere({ id: this.currentDisplayNoteId });
+    }
+
+    updateDisplayNoteId(noteId) {
+        this.currentDisplayNoteId = noteId;
+    }
+
     updateNoteTitle(newNoteTitle) {
-        const noteCollection = DataStore.get('noteCollection');
-        noteCollection.update({ id: displayCond.noteId }, { title: newNoteTitle });
-        noteCollection.save();
-    },
-    changeMode() {
-        mode = mode === 'preview' ? 'edit' : 'preview';
-    },
+        const noteModel = this.getDisplayNoteModel();
+        if (noteModel.title() === newNoteTitle) return;
+
+        noteModel.title(newNoteTitle);
+        noteModel.updatedAt(moment().unix());
+        DataStore.get('noteCollection').save();
+    }
+
     isPreviewMode() {
-        return mode === 'preview';
-    },
+        return this.mode === 'preview';
+    }
+
+    switchMode() {
+        this.mode = this.isPreviewMode() ? 'edit' : 'preview';
+    }
+
     saveAtRegularInterval(options) {
+        this.clearTimer();
+
         if (this.isPreviewMode()) return;
-        const noteModel = options.noteModel || this.getModelByDisplayCond();
-        timer = setInterval(() => {
-            noteModel.content(document.getElementById('note-textarea').value);
+
+        const noteModel =
+            _.isObject(options) && options.noteModel ?
+            options.noteModel : this.getDisplayNoteModel();
+
+        this.timer = setInterval(() => {
+            const val = document.getElementById('note-textarea').value;
+            if (val === noteModel.content()) return;
+            noteModel.content(val);
+            noteModel.updatedAt(moment().unix());
             DataStore.get('noteCollection').save();
         }, 2000);
-    },
+    }
+
     clearTimer() {
-        if (timer) clearTimeout(timer);
-    },
-};
+        if (this.timer) clearTimeout(this.timer);
+    }
+
+}

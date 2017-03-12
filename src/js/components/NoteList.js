@@ -53,7 +53,7 @@ export default {
               NoteListVm.getDisplayNoteModels().map((model) => {
                 return <li class="note-list-note" note-id={ model.id() } onclick={ m.withAttr('note-id', ctrl.onClickNote) } oncontextmenu={ m.withAttr('note-id', ctrl.showContextMenu) }>
                   <p class="note-list-note-title">{ model.title() }</p>
-                  <p class="note-list-note-created-at">updated: { moment.unix(model.updatedAt()).format('YYYY/MM/DD hh:mm') }</p>
+                  <p class="note-list-note-created-at">updated: { moment.unix(model.updatedAt()).format('YYYY/MM/DD HH:mm') }</p>
                 </li>
               })
             }

@@ -1,41 +1,29 @@
 import m from 'mithril';
-import NoteVm from '../vms/Note';
-import Publisher from '../lib/Publisher';
 import marked from 'marked';
+import NoteVm from '../vms/Note';
 
 export default {
+
     controller() {
+        this.vm = new NoteVm();
+
         this.unload = () => {
-            NoteVm.clearTimer();
+            this.vm.clearTimer();
         };
-
-        this.updateNoteModel = (noteId) => {
-            NoteVm.updateDisplayCond({ noteId });
-        };
-
-        this.onChangeNoteTitleValue = (newNoteTitle) => {
-            NoteVm.updateNoteTitle(newNoteTitle);
-        };
-
-        Publisher.on('showNote', this.updateNoteModel, this);
     },
+
     view(ctrl) {
-        NoteVm.clearTimer();
+        // start a timer if the mode is 'edit'
+        const noteModel = ctrl.vm.getDisplayNoteModel();
+        ctrl.vm.saveAtRegularInterval({ noteModel });
 
-        const noteModel = NoteVm.getModelByDisplayCond();
-        if (!noteModel) return <p></p>;
-        NoteVm.saveAtRegularInterval({ noteModel });
+        // display nothing
+        if (!noteModel) return <div id='note-container' class='column'></div>
 
-        if (NoteVm.isPreviewMode()) {
+        // preview mode view
+        if (ctrl.vm.isPreviewMode()) {
             return <div id='note-container' class='column'>
-              <form>
-                <input type="text" id="note-title" value={ noteModel.title() } onblur={ m.withAttr('value', ctrl.onChangeNoteTitleValue) }></input>
-              </form>
-              <p id='note-date'>
-                created_at:  <span id='created-at'>{ noteModel.createdAt() }</span>
-                updated_at:  <span id='updated-at'>{ noteModel.updatedAt() }</span>
-              </p>
-
+              <h1 id="note-title"> { noteModel.title() } </h1>
               <div class="tabs is-boxed">
                 <ul>
                   <li class="is-active">
@@ -44,7 +32,7 @@ export default {
                       <span>Render</span>
                     </a>
                   </li>
-                  <li onclick={ NoteVm.changeMode }>
+                  <li onclick={ ctrl.vm.switchMode.bind(ctrl.vm) }>
                     <a>
                       <span class="icon is-small"><i class="fa fa-edit"></i></span>
                       <span>Edit</span>
@@ -52,32 +40,20 @@ export default {
                   </li>
                 </ul>
               </div>
-
-
-
-
-
-
-
-
               <div class="markdown-body">
                 { m.trust(marked(noteModel.content())) }
               </div>
-
             </div>
         }
 
-
+        // edit mode view
         return <div id='note-container' class='column'>
-          <h1 id="note-title"> { noteModel.title() } </h1>
-          <p id='note-date'>
-            created_at:  <span id='created-at'>{ noteModel.createdAt() }</span>
-            updated_at:  <span id='updated-at'>{ noteModel.updatedAt() }</span>
-          </p>
-
+          <form>
+            <input type="text" id="note-title" value={ noteModel.title() } onblur={ m.withAttr('value', ctrl.vm.updateNoteTitle.bind(ctrl.vm)) }></input>
+          </form>
           <div class="tabs is-boxed">
             <ul>
-              <li onclick={ NoteVm.changeMode }>
+              <li onclick={ ctrl.vm.switchMode.bind(ctrl.vm) }>
                 <a>
                   <span class="icon is-small"><i class="fa fa-play"></i></span>
                   <span>Render</span>
@@ -91,9 +67,12 @@ export default {
               </li>
             </ul>
           </div>
-
           <textarea id="note-textarea">{noteModel.content()}</textarea>
-
         </div>
-    }
+    },
+
 };
+
+
+
+
