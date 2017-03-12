@@ -22,7 +22,7 @@ export default {
     },
     createNewNote() {
         const noteCollection = DataStore.get('noteCollection');
-        const currentFolderId = displayNoteModelsCond.folderId;
+        const currentFolderId = displayNoteModelsCond.folderId || 0;
         noteCollection.addDefaultDataList(currentFolderId);
         noteCollection.save();
     },

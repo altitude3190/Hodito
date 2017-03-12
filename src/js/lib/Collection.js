@@ -32,6 +32,7 @@ export default class {
     }
 
     delete(targetAttr) {
+        if (!_.isObject(targetAttr)) throw new Error('targetAttr must be Object');
         const index = _.findIndex(this.models(), model => {
             return _.every(targetAttr, (val, key) => {
                 return model[key]() === val;
