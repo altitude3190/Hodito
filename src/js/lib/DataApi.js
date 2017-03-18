@@ -1,11 +1,11 @@
 import jetpack from 'fs-jetpack';
-import CONFIG from '../Config';
+import { remote } from 'electron';
 
 export default class {
 
     constructor(data) {
         this.fileName = data.fileName;
-        this.filePath = `${CONFIG.SAVE_DATA_DIR}/${this.fileName}.json`;
+        this.filePath = `${remote.app.getPath('userData')}/${this.fileName}.json`;
     }
 
     read() {
