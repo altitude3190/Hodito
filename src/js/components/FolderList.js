@@ -11,9 +11,8 @@ export default {
     view(ctrl) {
         return <aside id="sidebar" class='column is-2'>
           <div id='sidebar-folder-header'>
-            <p id="sidebar-folder-label">FOLDERS</p>
             <button id="sidebar-folder-create-btn" onclick={ ctrl.vm.createNewFolder }>
-              <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span> create a new folder
+              <span class="icon is-medium"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
             </button>
           </div>
           <ul id='sidebar-folder-list'>

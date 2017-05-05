@@ -45,15 +45,16 @@ export default {
     view(ctrl) {
         return <div id= 'note-list-container' class='column is-3'>
           <div id='note-list-header'>
-            <button id="note-create-btn" onclick={ NoteListVm.createNewNote }> create a new note </button>
+            <button id="note-create-btn" onclick={ NoteListVm.createNewNote }>
+                <span class="icon is-medium"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+            </button>
           </div>
-
           <ul id='note-list'>
             {
               NoteListVm.getDisplayNoteModels().map((model) => {
                 return <li class="note-list-note" note-id={ model.id() } onclick={ m.withAttr('note-id', ctrl.onClickNote) } oncontextmenu={ m.withAttr('note-id', ctrl.showContextMenu) }>
                   <p class="note-list-note-title">{ model.title() }</p>
-                  <p class="note-list-note-created-at">updated: { moment.unix(model.updatedAt()).format('YYYY/MM/DD HH:mm') }</p>
+                  <p class="note-list-note-updated-at">updated: { moment.unix(model.updatedAt()).format('YYYY/MM/DD HH:mm') }</p>
                 </li>
               })
             }
