@@ -7,6 +7,16 @@
     "indent": [2, 4],
     "space-before-function-paren": [ 2, "never" ],
     "arrow-body-style": [ 2, "always" ],
+    "react/react-in-jsx-scope": 0,
+    'react/no-unknown-property': [ 2,
+      ignore: [
+        'onclick',
+        'onblur',
+        'ondblclick',
+        'oncontextmenu',
+        'autofocus'
+      ],
+    ],
   },
   "settings": {
     "import/core-modules": [
