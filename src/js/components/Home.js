@@ -2,26 +2,28 @@ import m from 'mithril';
 import NoteList from './NoteList';
 import Folder from './FolderList';
 import Note from './Note';
-import NoteListVm from '../vms/NoteList';
 import DataStore from '../lib/DataStore';
 import FolderCollection from '../models/Folder';
+import NoteCollection from '../models/Note';
 
 export default {
-    controller() {
+    oninit() {
         const folderCollection = new FolderCollection();
         folderCollection.fetch();
+        const noteCollection = new NoteCollection();
+        noteCollection.fetch();
 
-        DataStore.set('noteCollection', NoteListVm.build());
         DataStore.set('folderCollection', folderCollection);
-        this.unload = () => {
-            DataStore.reset();
-        };
+        DataStore.set('noteCollection', noteCollection);
+    },
+    onremove() {
+        DataStore.reset();
     },
     view() {
         return [
-            m.component(Folder),
-            m.component(NoteList),
-            m.component(Note),
+            m(Folder),
+            m(NoteList),
+            m(Note),
         ];
     },
 };

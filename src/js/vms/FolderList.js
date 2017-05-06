@@ -58,12 +58,10 @@ export default class {
     }
 
     deleteFolder(folderId) {
-        m.redraw.strategy('diff');
-        m.startComputation();
         const folderCollection = DataStore.get('folderCollection');
         folderCollection.delete({ id: folderId });
         folderCollection.save();
-        m.endComputation();
+        m.redraw();
     }
 
     updateFolderName(newFolderName) {

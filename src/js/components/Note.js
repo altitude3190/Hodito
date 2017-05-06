@@ -4,24 +4,24 @@ import NoteVm from '../vms/Note';
 
 export default {
 
-    controller() {
+    oninit() {
         this.vm = new NoteVm();
-
-        this.unload = () => {
-            this.vm.clearTimer();
-        };
     },
 
-    view(ctrl) {
+    onremove() {
+        this.vm.clearTimer();
+    },
+
+    view() {
         // start a timer if the mode is 'edit'
-        const noteModel = ctrl.vm.getDisplayNoteModel();
-        ctrl.vm.saveAtRegularInterval({ noteModel });
+        const noteModel = this.vm.getDisplayNoteModel();
+        this.vm.saveAtRegularInterval({ noteModel });
 
         // display nothing
         if (!noteModel) return <div id='note-container' class='column'></div>
 
         // preview mode view
-        if (ctrl.vm.isPreviewMode()) {
+        if (this.vm.isPreviewMode()) {
             return <div id='note-container' class='column'>
               <h1 id="note-title"> { noteModel.title() } </h1>
               <div class="tabs is-boxed">
@@ -32,7 +32,7 @@ export default {
                       <span>Render</span>
                     </a>
                   </li>
-                  <li onclick={ ctrl.vm.switchMode.bind(ctrl.vm) }>
+                  <li onclick={ this.vm.switchMode.bind(this.vm) }>
                     <a>
                       <span class="icon is-small"><i class="fa fa-edit"></i></span>
                       <span>Edit</span>
@@ -49,11 +49,11 @@ export default {
         // edit mode view
         return <div id='note-container' class='column'>
           <form>
-            <input type="text" id="note-title" value={ noteModel.title() } onblur={ m.withAttr('value', ctrl.vm.updateNoteTitle.bind(ctrl.vm)) }></input>
+            <input type="text" id="note-title" value={ noteModel.title() } onblur={ m.withAttr('value', this.vm.updateNoteTitle.bind(this.vm)) }></input>
           </form>
           <div class="tabs is-boxed">
             <ul>
-              <li onclick={ ctrl.vm.switchMode.bind(ctrl.vm) }>
+              <li onclick={ this.vm.switchMode.bind(this.vm) }>
                 <a>
                   <span class="icon is-small"><i class="fa fa-play"></i></span>
                   <span>Render</span>
