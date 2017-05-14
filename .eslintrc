@@ -17,6 +17,11 @@
         'autofocus'
       ],
     ],
+    "react/jsx-no-bind": [ 2,
+      {
+        "allowBind": true,
+      }
+    ],
   },
   "settings": {
     "import/core-modules": [
