@@ -21,8 +21,7 @@ export default {
             <ul id="sidebar-folder-list">
               {
                 DataStore.get('folderCollection').models().map((model) => {
-                    const idVal = model.id() === this.vm.getSelectedFolderId() ? 'active' : '';
-                    if (model.id() === this.vm.getBeingEditedFolderId()) {
+                    if (model.id() === this.vm.currentBeingEditedFolderId()) {
                         return (
                           <li
                             id="active" folder-id={model.id()}
@@ -44,7 +43,8 @@ export default {
                     }
                     return (
                       <li
-                        id={idVal} folder-id={model.id()}
+                        id={model.id() === this.vm.currentSelectedFolderId() ? 'active' : ''}
+                        folder-id={model.id()}
                         onclick={m.withAttr('folder-id', this.vm.onClickFolderName, this.vm)}
                         oncontextmenu={m.withAttr('folder-id', this.vm.showContextMenu, this.vm)}
                       >
@@ -54,7 +54,7 @@ export default {
                         <span
                           folder-id={model.id()}
                           ondblclick={
-                            m.withAttr('folder-id', this.vm.updateBeingEditedFolderId, this.vm)
+                            m.withAttr('folder-id', this.vm.currentBeingEditedFolderId, this.vm)
                           }
                         >{model.name()}</span>
                       </li>
