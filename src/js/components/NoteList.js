@@ -7,14 +7,20 @@ export default {
 
     oninit() {
         this.vm = new NoteListVm();
-        Publisher.on('onClickFolderName', this.vm.updateCurrentSelectedFolderId, this.vm);
+        Publisher.on('onClickFolderName', this.vm.currentSelectedFolderId);
     },
 
     view() {
         return (
           <div id="note-list-container" className="column is-3">
             <div id="note-list-header">
-              <button id="note-create-btn" onclick={this.vm.createNewNote.bind(this.vm)}>
+              <button
+                id="note-create-btn"
+                onclick={
+                  this.vm.currentSelectedFolderId() ?
+                  this.vm.createNewNote.bind(this.vm) : ''
+                }
+              >
                 <span className="icon is-medium">
                   <i className="fa fa-plus-circle" aria-hidden="true"></i>
                 </span>

@@ -40,10 +40,6 @@ export default class {
         this.currentSelectedFolderId(folderId);
     }
 
-    updateBeingEditedFolderId(folderId) {
-        this.currentBeingEditedFolderId(folderId);
-    }
-
     createNewFolder() {
         const folderCollection = DataStore.get('folderCollection');
         folderCollection.addDefaultDataList();
@@ -54,6 +50,15 @@ export default class {
         const folderCollection = DataStore.get('folderCollection');
         folderCollection.delete({ id: folderId });
         folderCollection.save();
+
+        const noteCollection = DataStore.get('noteCollection');
+        noteCollection.delete({ folderId });
+        noteCollection.save();
+
+        if (this.currentSelectedFolderId() === folderId) {
+            Publisher.trigger('onClickFolderName', void 0);
+        }
+
         m.redraw();
     }
 

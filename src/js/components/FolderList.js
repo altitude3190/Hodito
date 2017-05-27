@@ -54,7 +54,7 @@ export default {
                         <span
                           folder-id={model.id()}
                           ondblclick={
-                            m.withAttr('folder-id', this.vm.currentBeingEditedFolderId, this.vm)
+                            m.withAttr('folder-id', this.vm.currentBeingEditedFolderId)
                           }
                         >{model.name()}</span>
                       </li>

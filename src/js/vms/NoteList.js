@@ -29,21 +29,16 @@ export default class {
         this.currentSelectedFolderId = prop(void 0);
     }
 
-    updateCurrentSelectedFolderId(folderId) {
-        this.currentSelectedFolderId(folderId);
-    }
-
     getDisplayNoteModels() {
+        if (!this.currentSelectedFolderId()) return [];
         const noteCollection = DataStore.get('noteCollection');
-        if (this.currentSelectedFolderId()) {
-            return noteCollection.filter({ folderId: this.currentSelectedFolderId() });
-        }
-        return noteCollection.models();
+        return noteCollection.filter({ folderId: this.currentSelectedFolderId() });
     }
 
     createNewNote() {
         const noteCollection = DataStore.get('noteCollection');
-        const currentFolderId = this.currentSelectedFolderId() || 0;
+        const currentFolderId = this.currentSelectedFolderId();
+        if (!currentFolderId) throw new Error('making a note whose folder id is undefined');
         noteCollection.addDefaultDataList(currentFolderId);
         noteCollection.save();
     }
