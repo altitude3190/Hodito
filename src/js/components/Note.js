@@ -1,11 +1,13 @@
 import m from 'mithril';
 import marked from 'marked';
+import Publisher from '../lib/Publisher';
 import NoteVm from '../vms/Note';
 
 export default {
 
     oninit() {
         this.vm = new NoteVm();
+        Publisher.on('showNote', this.vm.onShowNote, this.vm);
     },
 
     onremove() {
@@ -15,7 +17,7 @@ export default {
     view() {
         // start a timer if the mode is 'edit'
         const noteModel = this.vm.getDisplayNoteModel();
-        this.vm.saveAtRegularInterval({ noteModel });
+        this.vm.saveAtRegularInterval(noteModel);
 
         // display nothing
         if (!noteModel) return <div id="note-container" className="column"></div>;
@@ -33,7 +35,7 @@ export default {
                         <span>Render</span>
                       </a>
                     </li>
-                    <li onclick={this.vm.switchMode.bind(this.vm)}>
+                    <li onclick={m.withAttr(void 0, this.vm.changeMode, this.vm)}>
                       <a>
                         <span className="icon is-small"><i className="fa fa-edit"></i></span>
                         <span>Edit</span>
@@ -59,7 +61,7 @@ export default {
             </form>
             <div className="tabs is-boxed">
               <ul>
-                <li onclick={this.vm.switchMode.bind(this.vm)}>
+                <li onclick={m.withAttr(void 0, this.vm.changeMode, this.vm)}>
                   <a>
                     <span className="icon is-small"><i className="fa fa-play"></i></span>
                     <span>Render</span>

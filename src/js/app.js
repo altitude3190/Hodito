@@ -8,7 +8,7 @@ m.withAttr = (attrName, callback1, context) => {
             e.currentTarget[attrName] : e.currentTarget.getAttribute(attrName);
 
         // the following line is a difference from the original
-        if (target.match(/^(?:[1-9][0-9]*|0)$/)) target = Number(target);
+        if (target && target.match(/^(?:[1-9][0-9]*|0)$/)) target = Number(target);
 
         callback1.call(context || this, target);
     };

@@ -1,25 +1,25 @@
+import prop from 'mithril/stream';
 import _ from 'lodash';
 import moment from 'moment';
 import DataStore from '../lib/DataStore';
-import Publisher from '../lib/Publisher';
+import { NOTE_MODES } from '../Constant';
 
 export default class {
 
-    constructor(noteId) {
-        Publisher.on('showNote', this.updateDisplayNoteId, this);
-
-        this.currentDisplayNoteId = noteId;
-        this.mode = 'preview';
+    constructor() {
+        this.currentDisplayNoteId = prop(void 0);
+        this.mode = NOTE_MODES.PREVIEW;
         this.timer = void 0;
+    }
+
+    onShowNote(noteId) {
+        this.currentDisplayNoteId(noteId);
+        this.changeMode(NOTE_MODES.PREVIEW);
     }
 
     getDisplayNoteModel() {
         const noteCollection = DataStore.get('noteCollection');
-        return noteCollection.findWhere({ id: this.currentDisplayNoteId });
-    }
-
-    updateDisplayNoteId(noteId) {
-        this.currentDisplayNoteId = noteId;
+        return noteCollection.findWhere({ id: this.currentDisplayNoteId() });
     }
 
     updateNoteTitle(newNoteTitle) {
@@ -32,11 +32,16 @@ export default class {
     }
 
     isPreviewMode() {
-        return this.mode === 'preview';
+        return this.mode === NOTE_MODES.PREVIEW;
     }
 
-    switchMode() {
-        this.mode = this.isPreviewMode() ? 'edit' : 'preview';
+    changeMode(nextMode) {
+        if (!nextMode) {
+            this.mode = this.isPreviewMode() ? NOTE_MODES.EDIT : NOTE_MODES.PREVIEW;
+            return;
+        }
+        if (!_.includes(_.values(NOTE_MODES), nextMode)) throw new Error('invalid next mode');
+        this.mode = nextMode;
     }
 
     saveAtRegularInterval(options) {
