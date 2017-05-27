@@ -3,7 +3,10 @@
 @import './tab.sass'
 @import './markdown.sass'
 
+//------------------------------------------------------------------------------
 // color
+//------------------------------------------------------------------------------
+
 $white: #f2f2f2
 $black: #333
 $navy: #122640
@@ -12,7 +15,9 @@ $gray: #777D84
 $light-navy: #1C487C
 $light-gray: #e1e1e1
 
+//------------------------------------------------------------------------------
 // common
+//------------------------------------------------------------------------------
 
 html
   height: 100%
@@ -30,29 +35,32 @@ body
 li
   list-style: none
 
+//------------------------------------------------------------------------------
 // sidebar
+//------------------------------------------------------------------------------
 
 #sidebar
   background-color: $navy
   color: $white
 
-#sidebar-folder-list::-webkit-scrollbar
-  display: none
-
+$sidebar-folder-header-height: 45px
 #sidebar-folder-header
   padding: 6px 0px 6px 5px
   background-color: $dark
   border-bottom: 1px solid #071527
+  height: $sidebar-folder-header-height
   #sidebar-folder-create-btn
     color: $gray
     outline : none;
     &:hover
       color: $white
 
+$sidebar-folder-list-margin-top: 15px
 #sidebar-folder-list
-  padding: 15px 0px 15px 15px
+  margin-top: $sidebar-folder-list-margin-top
+  padding: 0px 0px 15px 15px
   overflow: scroll
-  height: 96%
+  height: calc(100% - #{$sidebar-folder-header-height} - #{$sidebar-folder-list-margin-top} * 2)
   li
     line-height: 25px
     .icon
@@ -65,8 +73,12 @@ li
 
 #folder-name-form
   outline: none
+  display: inline
+  width: 80%
 
+//------------------------------------------------------------------------------
 // note list
+//------------------------------------------------------------------------------
 
 #note-list-container
   border-right: 1px solid $light-gray
@@ -102,21 +114,26 @@ li
   overflow-y: scroll
   height: 96%
 
+//------------------------------------------------------------------------------
 // note
+//------------------------------------------------------------------------------
 
 #note-container
   padding: 20px
   overflow: hidden
 
+$note-title-height: 40px
 #note-title
   font-size: 1.9em
   border: none
   width: 100%
+  margin-bottom: 10px
+  height: $note-title-height
 
 #note-textarea
   overflow: scroll
   resize: none
-  height: 90%
+  height: calc(100% - #{$note-title-height} - #{$tabs-height}) // $tabs-height is defined in tab.sass
   width: 100%
   word-wrap: break-word
   outline: none
@@ -124,8 +141,3 @@ li
   border-right: #e8e8e8 1px solid
   border-bottom: #e8e8e8 1px solid
   padding: 5px
-
-#folder-name-form
-  display: inline
-  width: 80%
-
