@@ -1,6 +1,6 @@
 const electron = require('electron');
 // Module to control application life.
-const { app } = electron;
+const { app, Menu } = electron;
 // Module to create native browser window.
 const { BrowserWindow } = electron;
 
@@ -10,13 +10,16 @@ let win;
 
 function createWindow() {
     // Create the browser window.
-    win = new BrowserWindow({ width: 800, height: 600 });
+    win = new BrowserWindow(
+        {
+            minWidth: 960,
+            minHeight: 540,
+        }
+    );
+    win.maximize();
 
     // and load the index.html of the app.
     win.loadURL(`file://${__dirname}/index.html`);
-
-    // Open the DevTools.
-    win.webContents.openDevTools();
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -25,6 +28,84 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null;
     });
+
+    const template = [
+        {
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                { role: 'pasteandmatchstyle' },
+                { role: 'delete' },
+                { role: 'selectall' },
+            ],
+        },
+        {
+            label: 'View',
+            submenu: [
+                { role: 'reload' },
+                { role: 'forcereload' },
+                { role: 'toggledevtools' },
+                { type: 'separator' },
+                { role: 'resetzoom' },
+                { role: 'zoomin' },
+                { role: 'zoomout' },
+                { type: 'separator' },
+                { role: 'togglefullscreen' },
+            ],
+        },
+        {
+            role: 'window',
+            submenu: [
+                { role: 'minimize' },
+                { role: 'close' },
+            ],
+        },
+        {
+            role: 'help',
+            submenu: [
+                {
+                    label: 'Learn More',
+                    click() { electron.shell.openExternal('https://github.com/altitude3190/hodito'); },
+                },
+            ],
+        },
+    ];
+
+    if (process.platform === 'darwin') {
+        template.unshift(
+            {
+                label: app.getName(),
+                submenu: [
+                  { role: 'about' },
+                  { type: 'separator' },
+                  { role: 'services', submenu: [] },
+                  { type: 'separator' },
+                  { role: 'hide' },
+                  { role: 'hideothers' },
+                  { role: 'unhide' },
+                  { type: 'separator' },
+                  { role: 'quit' },
+                ],
+            }
+        );
+
+        // Window menu
+        template[3].submenu = [
+            { role: 'close' },
+            { role: 'minimize' },
+            { role: 'zoom' },
+            { type: 'separator' },
+            { role: 'front' },
+        ];
+    }
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
 }
 
 // This method will be called when Electron has finished
