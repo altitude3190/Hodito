@@ -14,7 +14,8 @@
         'onblur',
         'ondblclick',
         'oncontextmenu',
-        'autofocus'
+        'autofocus',
+        'onkeydown'
       ],
     ],
     "react/jsx-no-bind": [ 2,

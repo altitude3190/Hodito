@@ -53,12 +53,11 @@ export default {
         // edit mode view
         return (
           <div id="note-container" className="column">
-            <form>
-              <input
-                type="text" id="note-title" value={noteModel.title()}
-                onblur={m.withAttr('value', this.vm.updateNoteTitle, this.vm)}
-              ></input>
-            </form>
+            <input
+              type="text" id="note-title" value={noteModel.title()}
+              onblur={m.withAttr('value', this.vm.updateNoteTitle, this.vm)}
+              onkeydown={this.vm.onEnterKeyDown.bind(this.vm)}
+            ></input>
             <div className="tabs is-boxed">
               <ul>
                 <li onclick={m.withAttr(void 0, this.vm.changeMode, this.vm)}>

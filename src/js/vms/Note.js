@@ -17,6 +17,17 @@ export default class {
         this.changeMode(NOTE_MODES.PREVIEW);
     }
 
+    onEnterKeyDown(e) {
+        const ENTER_KEY_CODE = 13;
+        if (e.keyCode !== ENTER_KEY_CODE) {
+            // I want to write `e.redraw = false`,
+            // but I write the following because of eslint no-param-reassign.
+            _.assignIn(e, { redraw: false });
+            return;
+        }
+        e.target.blur();
+    }
+
     getDisplayNoteModel() {
         const noteCollection = DataStore.get('noteCollection');
         return noteCollection.findWhere({ id: this.currentDisplayNoteId() });

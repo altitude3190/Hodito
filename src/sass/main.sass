@@ -59,11 +59,14 @@ $sidebar-folder-header-height: 45px
 $sidebar-folder-list-margin-top: 15px
 #sidebar-folder-list
   margin-top: $sidebar-folder-list-margin-top
-  padding: 0px 0px 15px 15px
+  padding: 0px 10px 15px 15px
   overflow: scroll
   height: calc(100% - #{$sidebar-folder-header-height} - #{$sidebar-folder-list-margin-top} * 2)
   li
     line-height: 25px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
     .icon
       margin-right: 10px
       margin-left: 5px
@@ -105,6 +108,9 @@ $sidebar-folder-list-margin-top: 15px
 .note-list-note-title
   font-size: 2rem
   width: 100%
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
 
 .note-list-note-updated-at
   color: #888888
@@ -132,6 +138,9 @@ $note-title-height: 40px
   width: 100%
   margin-bottom: 10px
   height: $note-title-height
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
 
 #note-textarea
   overflow: scroll

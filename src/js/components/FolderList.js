@@ -36,6 +36,7 @@ export default {
                             <input
                               id="folder-name-form" type="text" value={model.name()} autofocus
                               onblur={m.withAttr('value', this.vm.updateFolderName, this.vm)}
+                              onkeydown={this.vm.onEnterKeyDown.bind(this.vm)}
                             >
                             </input>
                           </li>

@@ -40,6 +40,17 @@ export default class {
         this.currentSelectedFolderId(folderId);
     }
 
+    onEnterKeyDown(e) {
+        const ENTER_KEY_CODE = 13;
+        if (e.keyCode !== ENTER_KEY_CODE) {
+            // I want to write `e.redraw = false`,
+            // but I write the following because of eslint no-param-reassign.
+            _.assignIn(e, { redraw: false });
+            return;
+        }
+        e.target.blur();
+    }
+
     createNewFolder() {
         const folderCollection = DataStore.get('folderCollection');
         folderCollection.addDefaultDataList();
