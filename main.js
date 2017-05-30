@@ -29,6 +29,16 @@ function createWindow() {
         win = null;
     });
 
+    // links are always opened by a default browser
+    const webContents = win.webContents;
+    const openExternal = (e, url) => {
+        if (url === webContents.getURL()) return;
+        e.preventDefault();
+        electron.shell.openExternal(url);
+    };
+    webContents.on('new-window', openExternal);
+    webContents.on('will-navigate', openExternal);
+
     const template = [
         {
             label: 'Edit',
