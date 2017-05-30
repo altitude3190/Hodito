@@ -42,15 +42,19 @@ export default {
                           </li>
                           );
                     }
+                    const isCurrentSelected = model.id() === this.vm.currentSelectedFolderId();
                     return (
                       <li
-                        id={model.id() === this.vm.currentSelectedFolderId() ? 'active' : ''}
+                        id={isCurrentSelected ? 'active' : ''}
                         folder-id={model.id()}
                         onclick={m.withAttr('folder-id', this.vm.onClickFolderName, this.vm)}
                         oncontextmenu={m.withAttr('folder-id', this.vm.showContextMenu, this.vm)}
                       >
                         <span className="icon is-small">
-                          <i className="fa fa-folder" aria-hidden="true"></i>
+                          <i
+                            className={isCurrentSelected ? 'fa fa-folder-open' : 'fa fa-folder'}
+                            aria-hidden="true"
+                          ></i>
                         </span>
                         <span
                           folder-id={model.id()}

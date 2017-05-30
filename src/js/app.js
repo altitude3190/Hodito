@@ -1,5 +1,5 @@
 import m from 'mithril';
-import home from './components/Home';
+import Home from './components/Home';
 
 // override original mithril's method
 m.withAttr = (attrName, callback1, context) => {
@@ -16,5 +16,5 @@ m.withAttr = (attrName, callback1, context) => {
 
 m.route.prefix('#');
 m.route(document.getElementById('columns'), '/', {
-    '/': home,
+    '/': Home,
 });
