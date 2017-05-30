@@ -5,7 +5,7 @@ export default class {
 
     constructor(data) {
         this.fileName = data.fileName;
-        this.filePath = `${remote.app.getPath('userData')}/${this.fileName}.json`;
+        this.filePath = `${remote.app.getPath('userData')}/DataFiles/${this.fileName}.json`;
     }
 
     read() {

@@ -12,6 +12,7 @@ module.exports = {
         filename: 'app.js',
     },
     target: 'electron',
+    devtool: 'cheap-eval-source-map',
     module: {
         loaders: [
             {

@@ -80,7 +80,7 @@ function createWindow() {
             submenu: [
                 {
                     label: 'Learn More',
-                    click() { electron.shell.openExternal('https://github.com/altitude3190/hodito'); },
+                    click() { electron.shell.openExternal('https://github.com/altitude3190/Hodito'); },
                 },
             ],
         },
