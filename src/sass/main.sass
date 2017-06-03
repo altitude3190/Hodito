@@ -33,9 +33,6 @@ body
   line-height: 1.428571428571429
   height: 100%
 
-li
-  list-style: none
-
 //------------------------------------------------------------------------------
 // sidebar
 //------------------------------------------------------------------------------
@@ -68,6 +65,7 @@ $sidebar-folder-list-margin-top: 15px
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
+    list-style: none
     .icon
       margin-right: 10px
       margin-left: 5px
@@ -75,6 +73,9 @@ $sidebar-folder-list-margin-top: 15px
       background-color: $light-navy
   li#active
     background-color: $light-navy
+
+#sidebar-folder-list::-webkit-scrollbar
+  display: none
 
 #folder-name-form
   outline: none
@@ -121,8 +122,13 @@ $sidebar-folder-list-margin-top: 15px
 #note-list
   overflow-y: scroll
   height: 96%
+  li
+    list-style: none
   li#active
     background-color: $super-light-gray
+
+#note-list::-webkit-scrollbar
+  display: none
 
 //------------------------------------------------------------------------------
 // note
