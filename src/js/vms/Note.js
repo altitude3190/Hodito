@@ -1,25 +1,36 @@
+import prop from 'mithril/stream';
 import _ from 'lodash';
 import moment from 'moment';
 import DataStore from '../lib/DataStore';
-import Publisher from '../lib/Publisher';
+import { NOTE_MODES } from '../Constant';
 
 export default class {
 
-    constructor(noteId) {
-        Publisher.on('showNote', this.updateDisplayNoteId, this);
-
-        this.currentDisplayNoteId = noteId;
-        this.mode = 'preview';
+    constructor() {
+        this.currentDisplayNoteId = prop(void 0);
+        this.mode = NOTE_MODES.PREVIEW;
         this.timer = void 0;
+    }
+
+    onShowNote(noteId) {
+        this.currentDisplayNoteId(noteId);
+        this.changeMode(NOTE_MODES.PREVIEW);
+    }
+
+    onEnterKeyDown(e) {
+        const ENTER_KEY_CODE = 13;
+        if (e.keyCode !== ENTER_KEY_CODE) {
+            // I want to write `e.redraw = false`,
+            // but I write the following because of eslint no-param-reassign.
+            _.assignIn(e, { redraw: false });
+            return;
+        }
+        e.target.blur();
     }
 
     getDisplayNoteModel() {
         const noteCollection = DataStore.get('noteCollection');
-        return noteCollection.findWhere({ id: this.currentDisplayNoteId });
-    }
-
-    updateDisplayNoteId(noteId) {
-        this.currentDisplayNoteId = noteId;
+        return noteCollection.findWhere({ id: this.currentDisplayNoteId() });
     }
 
     updateNoteTitle(newNoteTitle) {
@@ -32,11 +43,16 @@ export default class {
     }
 
     isPreviewMode() {
-        return this.mode === 'preview';
+        return this.mode === NOTE_MODES.PREVIEW;
     }
 
-    switchMode() {
-        this.mode = this.isPreviewMode() ? 'edit' : 'preview';
+    changeMode(nextMode) {
+        if (!nextMode) {
+            this.mode = this.isPreviewMode() ? NOTE_MODES.EDIT : NOTE_MODES.PREVIEW;
+            return;
+        }
+        if (!_.includes(_.values(NOTE_MODES), nextMode)) throw new Error('invalid next mode');
+        this.mode = nextMode;
     }
 
     saveAtRegularInterval(options) {
@@ -54,7 +70,7 @@ export default class {
             noteModel.content(val);
             noteModel.updatedAt(moment().unix());
             DataStore.get('noteCollection').save();
-        }, 2000);
+        }, 1000);
     }
 
     clearTimer() {

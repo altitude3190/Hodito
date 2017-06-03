@@ -1,4 +1,4 @@
-import m from 'mithril';
+import prop from 'mithril/stream';
 import _ from 'lodash';
 import DataApi from './DataApi';
 
@@ -7,7 +7,7 @@ export default class {
     constructor(data) {
         this.modelClass = data.modelClass;
         this.modelClassName = data.modelClassName;
-        this.models = m.prop([]);
+        this.models = prop([]);
         this.dataApi = new DataApi({ fileName: data.modelClassName });
     }
 

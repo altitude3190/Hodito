@@ -1,26 +1,20 @@
 import m from 'mithril';
-import home from './components/Home';
+import Home from './components/Home';
 
 // override original mithril's method
-m.withAttr = (prop, withAttrCallback, callbackThis) => {
+m.withAttr = (attrName, callback1, context) => {
     return (e) => {
-        const event = e || window.event;
-
-        const currentTarget = event.currentTarget || this;
-        const that = callbackThis || this;
-
-        let target = prop in currentTarget ?
-            currentTarget[prop] :
-            currentTarget.getAttribute(prop);
+        let target = attrName in e.currentTarget ?
+            e.currentTarget[attrName] : e.currentTarget.getAttribute(attrName);
 
         // the following line is a difference from the original
-        if (target.match(/^(?:[1-9][0-9]*|0)$/)) target = Number(target);
+        if (target && target.match(/^(?:[1-9][0-9]*|0)$/)) target = Number(target);
 
-        withAttrCallback.call(that, target);
+        callback1.call(context || this, target);
     };
 };
 
-m.route.mode = 'hash';
+m.route.prefix('#');
 m.route(document.getElementById('columns'), '/', {
-    '/': home,
+    '/': Home,
 });

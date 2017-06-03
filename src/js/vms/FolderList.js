@@ -1,4 +1,5 @@
 import m from 'mithril';
+import prop from 'mithril/stream';
 import _ from 'lodash';
 import moment from 'moment';
 import DataStore from '../lib/DataStore';
@@ -25,8 +26,8 @@ const makeContextMenu = (folderId) => {
 export default class {
 
     constructor() {
-        this.currentSelectedFolderId = void 0;
-        this.currentBeingEditedFolderId = void 0;
+        this.currentSelectedFolderId = prop(void 0);
+        this.currentBeingEditedFolderId = prop(void 0);
     }
 
     showContextMenu(folderId) {
@@ -35,20 +36,19 @@ export default class {
     }
 
     onClickFolderName(folderId) {
-        Publisher.trigger('onClickFolderName', { folderId });
-        this.currentSelectedFolderId = folderId;
+        Publisher.trigger('onClickFolderName', folderId);
+        this.currentSelectedFolderId(folderId);
     }
 
-    getSelectedFolderId() {
-        return this.currentSelectedFolderId;
-    }
-
-    getBeingEditedFolderId() {
-        return this.currentBeingEditedFolderId;
-    }
-
-    updateBeingEditedFolderId(folderId) {
-        this.currentBeingEditedFolderId = folderId;
+    onEnterKeyDown(e) {
+        const ENTER_KEY_CODE = 13;
+        if (e.keyCode !== ENTER_KEY_CODE) {
+            // I want to write `e.redraw = false`,
+            // but I write the following because of eslint no-param-reassign.
+            _.assignIn(e, { redraw: false });
+            return;
+        }
+        e.target.blur();
     }
 
     createNewFolder() {
@@ -58,25 +58,32 @@ export default class {
     }
 
     deleteFolder(folderId) {
-        m.redraw.strategy('diff');
-        m.startComputation();
         const folderCollection = DataStore.get('folderCollection');
         folderCollection.delete({ id: folderId });
         folderCollection.save();
-        m.endComputation();
+
+        const noteCollection = DataStore.get('noteCollection');
+        noteCollection.delete({ folderId });
+        noteCollection.save();
+
+        if (this.currentSelectedFolderId() === folderId) {
+            Publisher.trigger('onClickFolderName', void 0);
+        }
+
+        m.redraw();
     }
 
     updateFolderName(newFolderName) {
         const folderCollection = DataStore.get('folderCollection');
         folderCollection.update(
-            { id: this.currentBeingEditedFolderId },
+            { id: this.currentBeingEditedFolderId() },
             {
                 name: newFolderName,
                 updatedAt: moment().unix(),
             }
         );
         folderCollection.save();
-        this.currentBeingEditedFolderId = void 0;
+        this.currentBeingEditedFolderId(void 0);
     }
 
 }

@@ -4,36 +4,71 @@ import FolderListVm from '../vms/FolderList';
 
 export default {
 
-    controller() {
+    oninit() {
         this.vm = new FolderListVm();
     },
 
-    view(ctrl) {
-        return <aside id="sidebar" class='column is-2'>
-          <div id='sidebar-folder-header'>
-            <p id="sidebar-folder-label">FOLDERS</p>
-            <button id="sidebar-folder-create-btn" onclick={ ctrl.vm.createNewFolder }>
-              <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span> create a new folder
-            </button>
-          </div>
-          <ul id='sidebar-folder-list'>
-            {
-              DataStore.get('folderCollection').models().map((model) => {
-                const idVal = model.id() === ctrl.vm.getSelectedFolderId() ? 'active' : '';
-                if (model.id() === ctrl.vm.getBeingEditedFolderId()) {
-                  return <li id='active' folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.vm.onClickFolderName.bind(ctrl.vm)) } oncontextmenu={ m.withAttr('folder-id', ctrl.vm.showContextMenu.bind(ctrl.vm)) } >
-                    <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
-                    <input id='folder-name-form' type='text' value={ model.name() } autofocus onblur={ m.withAttr('value', ctrl.vm.updateFolderName.bind(ctrl.vm)) }></input>
-                  </li>
-                } else {
-                  return <li id={ idVal } folder-id={ model.id() } onclick={ m.withAttr('folder-id', ctrl.vm.onClickFolderName.bind(ctrl.vm)) } oncontextmenu={ m.withAttr('folder-id', ctrl.vm.showContextMenu.bind(ctrl.vm)) } >
-                    <span class="icon is-small"><i class="fa fa-folder" aria-hidden="true"></i></span>
-                    <span folder-id={ model.id() } ondblclick={ m.withAttr('folder-id', ctrl.vm.updateBeingEditedFolderId.bind(ctrl.vm)) }>{ model.name() }</span>
-                  </li>
-                }
-              })
-            }
-          </ul>
-        </aside>
+    view() {
+        return (
+          <aside id="sidebar" className="column is-2">
+            <div id="sidebar-folder-header">
+              <button id="sidebar-folder-create-btn" onclick={this.vm.createNewFolder}>
+                <span className="icon is-medium">
+                  <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <ul id="sidebar-folder-list">
+              {
+                DataStore.get('folderCollection').models().map((model) => {
+                    if (model.id() === this.vm.currentBeingEditedFolderId()) {
+                        return (
+                          <li
+                            id="active" folder-id={model.id()}
+                            onclick={m.withAttr('folder-id', this.vm.onClickFolderName, this.vm)}
+                            oncontextmenu={
+                              m.withAttr('folder-id', this.vm.showContextMenu, this.vm)
+                            }
+                          >
+                            <span className="icon is-small">
+                              <i className="fa fa-folder" aria-hidden="true"></i>
+                            </span>
+                            <input
+                              id="folder-name-form" type="text" value={model.name()} autofocus
+                              onblur={m.withAttr('value', this.vm.updateFolderName, this.vm)}
+                              onkeydown={this.vm.onEnterKeyDown.bind(this.vm)}
+                            >
+                            </input>
+                          </li>
+                          );
+                    }
+                    const isCurrentSelected = model.id() === this.vm.currentSelectedFolderId();
+                    return (
+                      <li
+                        id={isCurrentSelected ? 'active' : ''}
+                        folder-id={model.id()}
+                        onclick={m.withAttr('folder-id', this.vm.onClickFolderName, this.vm)}
+                        oncontextmenu={m.withAttr('folder-id', this.vm.showContextMenu, this.vm)}
+                      >
+                        <span className="icon is-small">
+                          <i
+                            className={isCurrentSelected ? 'fa fa-folder-open' : 'fa fa-folder'}
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                        <span
+                          folder-id={model.id()}
+                          ondblclick={
+                            m.withAttr('folder-id', this.vm.currentBeingEditedFolderId)
+                          }
+                        >{model.name()}</span>
+                      </li>
+                    );
+                })
+              }
+            </ul>
+          </aside>
+        );
     },
+
 };
